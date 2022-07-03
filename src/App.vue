@@ -1,26 +1,84 @@
 <template>
-  <img alt="Vue logo" src="./assets/logo.png">
-  <HelloWorld msg="Welcome to Your Vue.js App"/>
+  <div>
+    <header>
+      <h1>Get a Good Advice</h1>
+      <button @click="getAdvice">Get Advice</button>
+    </header>
+    <main>
+      <h2>{{ advice }}</h2>
+    </main>
+  </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
-
 export default {
-  name: 'App',
-  components: {
-    HelloWorld
-  }
-}
+  name: "App",
+  data() {
+    return {
+      advice: "",
+    };
+  },
+  methods: {
+    async getAdvice() {
+      const res = await fetch("https://api.adviceslip.com/advice");
+      const data = await res.json();
+      this.advice = data.slip.advice;
+    },
+  },
+};
 </script>
 
 <style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #343a40;
+  color: #e03131;
+  font-family: "Finlandica", sans-serif;
+}
+
+header {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  gap: 32px;
+  margin-top: 100px;
+  margin-bottom: 50px;
+}
+
+h1 {
+  box-shadow: rgba(50, 50, 93, 0.25) 0px 6px 12px -2px,
+    rgba(0, 0, 0, 0.3) 0px 3px 7px -3px;
+  border: 2px solid #f03e3e;
+  border-radius: 12px;
+  padding: 12px 24px;
+}
+
+button {
+  color: #f03e3e;
+  background: none;
+  padding: 8px 12px;
+  border-radius: 12px;
+  border: 2px solid #f03e3e;
+}
+
+button:hover {
+  opacity: 0.8;
+  cursor: pointer;
+}
+
+main {
+  max-width: 400px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 </style>
